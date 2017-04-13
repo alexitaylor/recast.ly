@@ -5,7 +5,6 @@ class Search extends React.Component {
 			value: ''
 		}
 
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleEventChange = this.handleEventChange.bind(this);
 	}
 
@@ -16,21 +15,11 @@ class Search extends React.Component {
 		})
 	}
 
-	handleSubmit(event) {
-		console.log(this.state.value);
-		searchYouTube(this.state.value, function(data){
-			return data;
-			console.log("Success Callback Called");
-
-		});
-		event.preventDefault();
-	}
-
 	render() {
 		return (
 			<div className="search-bar form-inline">
     		<input className="form-control" type="text" value={this.state.value} onChange={this.handleEventChange} />
-    		<button className="btn hidden-sm-down" onClick={this.handleSubmit}>
+    		<button className="btn hidden-sm-down" onClick={this.props.onClick}>
       		<span className="glyphicon glyphicon-search"></span>
     		</button>
   		</div>

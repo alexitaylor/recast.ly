@@ -2,9 +2,25 @@ class App extends React.Component {
   constructor(props) {
  	  super(props);
  	  this.state = {
- 	  video: window.exampleVideoData[0]
+   	  video: window.exampleVideoData[0],
+      videos: window.exampleVideoData
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onVideoTitleClick = this.onVideoTitleClick.bind(this);
   }
+
+
+
+  // componentDidMount() {
+  //   // get api data
+  //   // then setState to new api data
+
+  //   this.setState({
+  //     video: searchResults[0],
+  //     videos: searchResults
+  //   })
+  // }
 
   findIndex(array, attr, value) {
   for (var i = 0; i < array.length; i++) {
@@ -13,6 +29,23 @@ class App extends React.Component {
     }
   }
   return -1;
+  }
+
+  handleSubmit(event) {
+    var options = {
+      key: window.YOUTUBE_API_KEY,
+      query: this.state.value,
+      max: 5
+    }
+
+    var searchResults;
+    searchYouTube(options, function(data){
+      searchResults = data.items;
+    });
+    // setTimeout( () => {
+    //   console.log(searchResults);
+    // }, 1000);
+    event.preventDefault();
   }
 
   onVideoTitleClick(e) {
@@ -28,12 +61,12 @@ class App extends React.Component {
   render() {
    	return (
    	<div>
-      <Nav />
+      <Nav onClick={this.handleSubmit}/>
         <div className="col-md-12">
           <VideoPlayer video={this.state.video} />
         </div>
         <div className="col-md-12">
-          <VideoList onClick={this.onVideoTitleClick.bind(this)} videos={window.exampleVideoData} />
+          <VideoList onClick={this.onVideoTitleClick} videos={this.state.videos} />
         </div>
     </div>
     );
