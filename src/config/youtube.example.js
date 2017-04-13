@@ -1,2 +1,5 @@
 // Put your YouTube API keys here!
-window.YOUTUBE_API_KEY = 'YOUR_API_KEY_HERE';
+
+//This is a public API key, not individual user
+
+window.YOUTUBE_API_KEY = 'AIzaSyAaqXDTYzMFh0o9wIRvPtYMORvK3o5Jz1I';
