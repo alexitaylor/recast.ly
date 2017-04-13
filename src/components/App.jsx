@@ -3,24 +3,18 @@ class App extends React.Component {
  	  super(props);
  	  this.state = {
    	  video: window.exampleVideoData[0],
-      videos: window.exampleVideoData
+      videos: window.exampleVideoData,
+      value: ''
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.onVideoTitleClick = this.onVideoTitleClick.bind(this);
   }
 
-
-
-  // componentDidMount() {
-  //   // get api data
-  //   // then setState to new api data
-
-  //   this.setState({
-  //     video: searchResults[0],
-  //     videos: searchResults
-  //   })
-  // }
+  componentDidMount() {
+    ///searchYouTube(...this.setState())
+  }
 
   findIndex(array, attr, value) {
   for (var i = 0; i < array.length; i++) {
@@ -31,20 +25,26 @@ class App extends React.Component {
   return -1;
   }
 
+  handleSearchChange(event) {
+    // console.log('Event Target: ' + event.target.value);
+    this.setState({
+      value: event.target.value
+    });
+    event.preventDefault();
+  }
+
   handleSubmit(event) {
     var options = {
       key: window.YOUTUBE_API_KEY,
       query: this.state.value,
       max: 5
     }
-
-    var searchResults;
-    searchYouTube(options, function(data){
-      searchResults = data.items;
+    searchYouTube(options, (data) => {
+      this.setState({
+        video: data.items[0],
+        videos: data.items
+      });
     });
-    // setTimeout( () => {
-    //   console.log(searchResults);
-    // }, 1000);
     event.preventDefault();
   }
 
@@ -52,16 +52,16 @@ class App extends React.Component {
    	console.log("I was clicked!!!");
    	console.log(e.target.id);
    	var id = e.target.id;
-   	var index = this.findIndex(window.exampleVideoData, 'etag', id)
+   	var index = this.findIndex(this.state.videos, 'etag', id)
    	this.setState({
-   	  video: window.exampleVideoData[index]
+   	  video: this.state.videos[index]
    	});
   }
 
   render() {
    	return (
    	<div>
-      <Nav onClick={this.handleSubmit}/>
+      <Nav onClick={this.handleSubmit} onChange={this.handleSearchChange}/>
         <div className="col-md-12">
           <VideoPlayer video={this.state.video} />
         </div>
