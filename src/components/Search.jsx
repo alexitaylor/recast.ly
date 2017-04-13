@@ -7,7 +7,7 @@ class Search extends React.Component {
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleEventChange = this.handleEventChange.bind(this);
-	}	
+	}
 
 	handleEventChange(event) {
 		console.log(event.target.value);
@@ -18,6 +18,11 @@ class Search extends React.Component {
 
 	handleSubmit(event) {
 		console.log(this.state.value);
+		searchYouTube(this.state.value, function(data){
+			return data;
+			console.log("Success Callback Called");
+
+		});
 		event.preventDefault();
 	}
 
@@ -28,13 +33,13 @@ class Search extends React.Component {
     		<button className="btn hidden-sm-down" onClick={this.handleSubmit}>
       		<span className="glyphicon glyphicon-search"></span>
     		</button>
-  		</div> 
+  		</div>
 		);
 	}
 }
 
 // var Search = () => (
-  
+
 // );
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope

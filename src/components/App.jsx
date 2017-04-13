@@ -25,14 +25,14 @@ class App extends React.Component {
    	});
   }
 
-  render() { 
+  render() {
    	return (
    	<div>
       <Nav />
-        <div className="col-md-7">
+        <div className="col-md-12">
           <VideoPlayer video={this.state.video} />
         </div>
-        <div className="col-md-5">
+        <div className="col-md-12">
           <VideoList onClick={this.onVideoTitleClick.bind(this)} videos={window.exampleVideoData} />
         </div>
     </div>

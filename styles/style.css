@@ -50,6 +50,7 @@ body {
   padding: 8px;
   border: 0;
   box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  width: 100%;
 }
 
 .video-list-entry {
