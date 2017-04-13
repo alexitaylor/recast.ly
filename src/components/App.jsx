@@ -10,47 +10,78 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.onVideoTitleClick = this.onVideoTitleClick.bind(this);
+    
   }
 
   componentDidMount() {
-    ///searchYouTube(...this.setState())
-  }
 
-  findIndex(array, attr, value) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i][attr] === value) {
-      return i;
-    }
-  }
-  return -1;
-  }
-
-  handleSearchChange(event) {
-    // console.log('Event Target: ' + event.target.value);
-    this.setState({
-      value: event.target.value
-    });
-    event.preventDefault();
-  }
-
-  handleSubmit(event) {
     var options = {
       key: window.YOUTUBE_API_KEY,
-      query: this.state.value,
+      query: 'cats',
       max: 5
     }
+
     searchYouTube(options, (data) => {
       this.setState({
         video: data.items[0],
         videos: data.items
       });
     });
+
+  }
+
+  findIndex(array, attr, value) {
+
+  for (var i = 0; i < array.length; i++) {
+    if (array[i][attr] === value) {
+      return i;
+    }
+  }
+  return -1;
+
+  }
+
+  handleSearchChange(event) {
+
+    this.setState({
+      value: event.target.value
+    });
+
+    var options = {
+      key: window.YOUTUBE_API_KEY,
+      query: this.state.value,
+      max: 5
+    }
+
+    searchYouTube(options, (data) => {
+      this.setState({
+        video: data.items[0],
+        videos: data.items
+      });
+    });
+
+    event.preventDefault();
+  }
+
+  handleSubmit(event) {
+
+    var options = {
+      key: window.YOUTUBE_API_KEY,
+      query: this.state.value,
+      max: 5
+    }
+
+    searchYouTube(options, (data) => {
+      this.setState({
+        video: data.items[0],
+        videos: data.items
+      });
+    });
+
     event.preventDefault();
   }
 
   onVideoTitleClick(e) {
-   	console.log("I was clicked!!!");
-   	console.log(e.target.id);
    	var id = e.target.id;
    	var index = this.findIndex(this.state.videos, 'etag', id)
    	this.setState({
