@@ -4,30 +4,34 @@ class App extends React.Component {
  	  this.state = {
    	  video: window.exampleVideoData[0],
       videos: window.exampleVideoData,
-      value: ''
+      value: '' 
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.onVideoTitleClick = this.onVideoTitleClick.bind(this);
-    
+
   }
 
   componentDidMount() {
 
+    this.getYouTubeVideos('cute kittens');
+
+  }
+
+  getYouTubeVideos(query) {
     var options = {
-      key: window.YOUTUBE_API_KEY,
-      query: 'cats',
+      key: this.props.API_KEY,
+      query: query,
       max: 5
     }
 
-    searchYouTube(options, (data) => {
+    this.props.searchYouTube(options, (videos) => {
       this.setState({
-        video: data.items[0],
-        videos: data.items
+        video: videos[0],
+        videos: videos
       });
     });
-
   }
 
   findIndex(array, attr, value) {
@@ -47,36 +51,14 @@ class App extends React.Component {
       value: event.target.value
     });
 
-    var options = {
-      key: window.YOUTUBE_API_KEY,
-      query: this.state.value,
-      max: 5
-    }
-
-    searchYouTube(options, (data) => {
-      this.setState({
-        video: data.items[0],
-        videos: data.items
-      });
-    });
+    this.getYouTubeVideos(this.state.value);
 
     event.preventDefault();
   }
 
   handleSubmit(event) {
 
-    var options = {
-      key: window.YOUTUBE_API_KEY,
-      query: this.state.value,
-      max: 5
-    }
-
-    searchYouTube(options, (data) => {
-      this.setState({
-        video: data.items[0],
-        videos: data.items
-      });
-    });
+    this.getYouTubeVideos(this.state.value);
 
     event.preventDefault();
   }
